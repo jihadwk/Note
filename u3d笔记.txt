@@ -1,0 +1,77 @@
+我要自学网：jihadwk wukai&6
+
+//游戏期间防止Android系统待机黑屏
+Screen.sleepTimeout = SleepTimeout.NeverSleep;
+
+application.internetreachability 网络可达性
+//判断环境的可用网络
+ if (Application.internetReachability == NetworkReachability.ReachableViaCarrierDataNetwork)
+        {
+            s = "2G/3G/4G";
+        }
+        else if (Application.internetReachability == NetworkReachability.ReachableViaLocalAreaNetwork)
+        {
+            s = "wifi";
+        }
+        else if (Application.internetReachability == NetworkReachability.NotReachable)
+        {
+            s = "duan wang";
+        }
+c# Lambda表达式 类似匿名函数
+Lambda表达式可以有多个参数、一个参数，或者没有参数。其参数类型可以隐式或者显式。示例代码如下：
+
+(x, y) => x * y         //多参数，隐式类型=> 表达式  
+x => x * 5              //单参数， 隐式类型=>表达式  
+x => { return x * 5; }      //单参数，隐式类型=>语句块  
+(int x) => x * 5            //单参数，显式类型=>表达式  
+(int x) => { return x * 5; }      //单参数，显式类型=>语句块  
+() => Console.WriteLine()   //无参数 
+
+yield break会终止掉yield迭代逻辑并跳出
+
+vector3  Lerp线性插值(from,to,float t) t[0,1] t=0时位置取from，t=1时，位置取to  t=Time.time/journeyTime Time.time当前走过的秒数，journeyTime 设定的从开始到结束的总时间 s
+
+
+	Slerp弧线插值
+
+(x,y,x,1)四元数 Quaternion四元数类 
+矩阵相乘 可以完成 平移、旋转、缩放
+4x4矩阵
+
+为了更好地区分向量和点，引入齐次坐标：使用（x,y,z,1)表示坐标点
+(x,y,z,0)表示向量
+
+局部坐标系、全局坐标系、相机坐标系、屏幕坐标系  Transform
+
+Input 处理输入的类
+
+GUI中坐标系 以左上角为（0,0）右下角为（Screen.width,Screen.height)
+
+GUILayout 自动布局
+
+batching 批处理
+
+授权服务器：逻辑处理都在服务器上，客户端只负责显示
+
+非授权服务器：逻辑由客户端处理，只是将处理结果通知服务器，服务端同步这些游戏数据到游戏中
+
+Network View 网络视图组件
+
+void OnGUI(){}渲染UI界面  switch(){}  能切换
+
+动画控制器 Animator Controller
+
+AssetBundle 可以将资源打包并压缩，然后上传到服务器，运行游戏时可以从网络服务器下载该资源，从而实现资源的动态加载
+二进制文件后缀.bytes才能被AssetBundle识别
+通过代码来制作assetbundle, BuildPipeline.BuildAssetBundle api将任意类型的assets打包成assetbundle文件
+BuildPipeline.BuildStreamedSceneAssetBundle 可以直接将项目中的一个或若干个场景以流式加载的方式打包成assetbundle
+BuildPipeline.BuildAssetBundleExplicitAssetNames 创建assetbundle时可以为每一个Object指定一个自定义的名字
+
+定义assetbundle之间的依赖关系,asset不会被多打包，不会重复
+BuildPipeline.PushAssetDependencies
+BuildPipeline.PopAssetDenpendencies
+
+
+增量式发布assetbundle
+
+.mat 材质  material

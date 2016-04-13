@@ -1,0 +1,37 @@
+启动服务：net start mysql
+关闭服务：net stop mysql
+
+mysql -uroot -p进入MySQL命令行
+	show databases; 显示数据库
+mysql --host localhost --user root --password 连接数据库server，可以连接别的主机上的数据库
+ 主机--用户--密码 访问
+	grant 可以建立一个账号
+create database test;建立数据库 default character set utf-8
+	use test;使用数据库
+	show tables;显示表
+	create table student(id int(10) primary key auto_increment,name varchar(30),age tinyint(2));
+	desc student;描述表
+	insert into student (name,age) values("zhangsan",22);插入数据
+	select * from student;查看表
+	drop table student;删除表，也可以删除数据库
+	mysql -uroot -p test <d:/test.sql 执行外部sql文件,还原表
+	
+	source d:/test.sql 也可以这样执行sql文件
+
+退出MySQL命令行：
+mysqldump -uroot -p test>d:/test.sql 备份数据库
+
+数据库字符集  表字符集  如果不一样 ，采用就近原则
+
+status;默认状态
+
+数据类型：整型（10,16,8进制） 0x  0
+ 		tinyint  1字节 (-128~127)  (0~255)   小整数
+		smallint 2字节 (-32768~32767) (0~65535) 大整数
+		mediumint 3字节(-8388608~8388607)(0,16777215)
+		int  4字节  (-2147483648,2147483647)
+		bigint 8字节
+	浮点数：
+		单精度float 4字节 -3.402823466 E+38~1.175494351E-38
+		双精度double 8字节
+	decimal(M,N) 准确的数字，M代表整数位，N代表小数位数 	
