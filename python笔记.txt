@@ -170,3 +170,536 @@ pop() 删除最后一个元素
 pop(index)删除指定元素
 
 tuple是另一种有序的列表，中文翻译为“ 元组 ”。tuple 和 list 非常类似，但是，tuple一旦创建完毕，就不能修改了  ()
+获取 tuple 元素的方式和 list 是一模一样的，我们可以正常使用 t[0]，t[-1]等索引方式访问元素，但是不能赋值成别的元素
+创建单元素tuple
+tuple和list一样，可以包含 0 个、1个和任意多个元素。
+
+包含多个元素的 tuple，前面我们已经创建过了。
+
+包含 0 个元素的 tuple，也就是空tuple，直接用 ()表示：
+
+>>> t = ()
+>>> print t
+()
+创建包含1个元素的 tuple 呢？来试试：
+
+>>> t = (1)
+>>> print t
+1
+好像哪里不对！t 不是 tuple ，而是整数1。为什么呢？
+
+因为()既可以表示tuple，又可以作为括号表示运算时的优先级，结果 (1) 被Python解释器计算出结果 1，导致我们得到的不是tuple，而是整数 1。
+
+正是因为用()定义单元素的tuple有歧义，所以 Python 规定，单元素 tuple 要多加一个逗号“,”，这样就避免了歧义：
+
+>>> t = (1,)
+>>> print t
+(1,)
+Python在打印单元素tuple时，也自动添加了一个“,”，为了更明确地告诉你这是一个tuple。
+
+多元素 tuple 加不加这个额外的“,”效果是一样的：
+
+>>> t = (1, 2, 3,)
+>>> print t
+(1, 2, 3)
+
+t = ('a', 'b', ['A', 'B'])
+tuple一开始指向的list并没有改成别的list，所以，tuple所谓的“不变”是说，tuple的每个元素，指向永远不变。即指向'a'，就不能改成指向'b'，指向一个list，就不能改成指向其他对象，但指向的这个list本身是可变的！
+
+Python代码的缩进规则。具有相同缩进的代码被视为代码块
+缩进请严格按照Python的习惯写法：4个空格，不要使用Tab，更不要混合Tab和空格，否则很容易造成因为缩进引起的语法错误
+
+if 语句后接表达式，然后用:表示代码块开始
+
+你在Python交互环境下敲代码，还要特别留意缩进，并且退出缩进需要多敲一行回车：
+
+if age >= 18:
+    print 'adult'
+else:
+    print 'teenager'
+
+if age >= 18:
+    print 'adult'
+elif age >= 6:
+    print 'teenager'
+elif age >= 3:
+    print 'kid'
+else:
+    print 'baby'
+
+list或tuple可以表示一个有序集合。如果我们想依次访问一个list中的每一个元素呢？
+Python的 for 循环就可以依次把list或tuple的每个元素迭代出来：
+
+L = ['Adam', 'Lisa', 'Bart']
+for name in L:
+    print name
+
+和 for 循环不同的另一种循环是 while 循环，while 循环不会迭代 list 或 tuple 的元素，而是根据表达式判断循环是否结束。
+
+比如要从 0 开始打印不大于 N 的整数：
+
+N = 10
+x = 0
+while x < N:
+    print x
+    x = x + 1
+while循环每次先判断 x < N，如果为True，则执行循环体的代码块，否则，退出循环。
+
+用 for 循环或者 while 循环时，如果要在循环体内直接退出循环，可以使用 break 语句
+还可以用continue跳过后续循环代码，继续下一次循环
+
+dict
+
+d = {
+    'Adam': 95,
+    'Lisa': 85,
+    'Bart': 59
+}
+字典
+花括号 {} 表示这是一个dict，然后按照 key: value, 写出来即可。最后一个 key: value 的逗号可以省略。
+由于dict也是集合，len() 函数可以计算任意集合的大小
+ d[key] 的形式来查找对应的 value，这和 list 很像，不同之处是，list 必须使用索引返回对应的元素，而dict使用key
+是先判断一下 key 是否存在，用 in 操作符：
+
+if 'Paul' in d:
+    print d['Paul']
+使用dict本身提供的一个 get 方法，在Key不存在的时候，返回None：
+
+>>> print d.get('Bart')
+59
+>>> print d.get('Paul')
+None
+
+dict的第一个特点是查找速度快，无论dict有10个元素还是10万个元素，查找速度都一样。而list的查找速度随着元素增加而逐渐下降。
+
+不过dict的查找速度快不是没有代价的，dict的缺点是占用内存大，还会浪费很多内容，list正好相反，占用内存小，但是查找速度慢。
+
+由于dict是按 key 查找，所以，在一个dict中，key不能重复。
+
+dict的第二个特点就是存储的key-value序对是没有顺序的！这和list不一样：
+
+d = {
+    'Adam': 95,
+    'Lisa': 85,
+    'Bart': 59
+}
+当我们试图打印这个dict时：
+
+>>> print d
+{'Lisa': 85, 'Adam': 95, 'Bart': 59}
+打印的顺序不一定是我们创建时的顺序，而且，不同的机器打印的顺序都可能不同，这说明dict内部是无序的，不能用dict存储有序的集合。
+
+dict的第三个特点是作为 key 的元素必须不可变，Python的基本类型如字符串、整数、浮点数都是不可变的，都可以作为 key。但是list是可变的，就不能作为 key。
+dict的作用是建立一组 key 和一组 value 的映射关系，dict的key是不能重复的。
+
+有的时候，我们只想要 dict 的 key，不关心 key 对应的 value，目的就是保证这个集合的元素不会重复，这时，set就派上用场了。
+
+set 持有一系列元素，这一点和 list 很像，但是set的元素没有重复，而且是无序的，这点和 dict 的 key很像。
+
+创建 set 的方式是调用 set() 并传入一个 list，list的元素将作为set的元素
+s = set(['A', 'B', 'C'])
+由于set存储的是无序集合，所以我们没法通过索引来访问。
+
+访问 set中的某个元素实际上就是判断一个元素是否在set中。
+
+例如，存储了班里同学名字的set：
+
+>>> s = set(['Adam', 'Lisa', 'Bart', 'Paul'])
+我们可以用 in 操作符判断：
+Bart是该班的同学吗？
+
+>>> 'Bart' in s
+True
+Bill是该班的同学吗？
+
+>>> 'Bill' in s
+False
+bart是该班的同学吗？
+
+>>> 'bart' in s
+False
+看来大小写很重要，'Bart' 和 'bart'被认为是两个不同的元素。
+set存储的元素和dict的key类似，必须是不变对象，因此，任何可变对象是不能放入set中的。
+
+最后，set存储的元素也是没有顺序的。
+由于set存储的是一组不重复的无序元素，因此，更新set主要做两件事：
+
+一是把新的元素添加到set中，二是把已有元素从set中删除。
+
+添加元素时，用set的add()方法：
+
+>>> s = set([1, 2, 3])
+>>> s.add(4)
+>>> print s
+set([1, 2, 3, 4])
+如果添加的元素已经存在于set中，add()不会报错，但是不会加进去了：
+
+>>> s = set([1, 2, 3])
+>>> s.add(3)
+>>> print s
+set([1, 2, 3])
+删除set中的元素时，用set的remove()方法：
+
+>>> s = set([1, 2, 3, 4])
+>>> s.remove(4)
+>>> print s
+set([1, 2, 3])
+如果删除的元素不存在set中，remove()会报错：
+
+>>> s = set([1, 2, 3])
+>>> s.remove(4)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+KeyError: 4
+所以用add()可以直接添加，而remove()前需要判断。
+abs()绝对值 cmp(x,y)如果 x<y，返回 -1，如果 x==y，返回 0，如果 x>y，返回 1：
+ int()函数可以把其他数据类型转换为整数：
+str()函数把其他类型转换成 str：
+
+，定义一个函数要使用 def 语句，依次写出函数名、括号、括号中的参数和冒号:，然后，在缩进块中编写函数体，函数的返回值用 return 语句返回。
+如果没有return语句，函数执行完毕后也会返回结果，只是结果为 None。
+
+return None可以简写为return。
+定义函数的时候，还可以有默认参数。
+
+例如Python自带的 int() 函数，其实就有两个参数，我们既可以传一个参数，又可以传两个参数：
+
+>>> int('123')
+123
+>>> int('123', 8)
+83
+int()函数的第二个参数是转换进制，如果不传，默认是十进制 (base=10)，如果传了，就用传入的参数。
+
+可见，函数的默认参数的作用是简化调用，你只需要把必须的参数传进去。但是在需要的时候，又可以传入额外的参数来覆盖默认参数值。
+
+我们来定义一个计算 x 的N次方的函数:
+
+def power(x, n):
+    s = 1
+    while n > 0:
+        n = n - 1
+        s = s * x
+    return s
+假设计算平方的次数最多，我们就可以把 n 的默认值设定为 2：
+
+def power(x, n=2):
+    s = 1
+    while n > 0:
+        n = n - 1
+        s = s * x
+    return s
+这样一来，计算平方就不需要传入两个参数了：
+由于函数的参数按从左到右的顺序匹配，所以默认参数只能定义在必需参数的后面：
+
+# OK:
+def fn1(a, b=1, c=2):
+    pass
+# Error:
+def fn2(a=1, b):
+    pass
+
+如果想让一个函数能接受任意个参数，我们就可以定义一个可变参数：
+
+def fn(*args):
+    print args
+可变参数的名字前面有个 * 号，我们可以传入0个、1个或多个参数给可变参数：
+
+>>> fn()
+()
+>>> fn('a')
+('a',)
+>>> fn('a', 'b')
+('a', 'b')
+>>> fn('a', 'b', 'c')
+('a', 'b', 'c')
+可变参数也不是很神秘，Python解释器会把传入的一组参数组装成一个tuple传递给可变参数，因此，在函数内部，直接把变量 args 看成一个 tuple 就好了。
+
+定义可变参数的目的也是为了简化调用。假设我们要计算任意个数的平均值，就可以定义一个可变参数：
+
+def average(*args):
+    ...
+这样，在调用的时候，可以这样写：
+
+>>> average()
+0
+>>> average(1, 2)
+1.5
+>>> average(1, 2, 2, 3, 4)
+2.4
+
+对应上面的问题，取前3个元素，用一行代码就可以完成切片：
+
+>>> L[0:3]
+['Adam', 'Lisa', 'Bart']
+L[0:3]表示，从索引0开始取，直到索引3为止，但不包括索引3。即索引0，1，2，正好是3个元素。
+
+如果第一个索引是0，还可以省略：
+
+>>> L[:3]
+['Adam', 'Lisa', 'Bart']
+也可以从索引1开始，取出2个元素出来：
+
+>>> L[1:3]
+['Lisa', 'Bart']
+只用一个 : ，表示从头到尾：
+
+>>> L[:]
+['Adam', 'Lisa', 'Bart', 'Paul']
+因此，L[:]实际上复制出了一个新list。
+
+切片操作还可以指定第三个参数：
+
+>>> L[::2]
+['Adam', 'Bart']
+第三个参数表示每N个取一个，上面的 L[::2] 会每两个元素取出一个来，也就是隔一个取一个。
+把list换成tuple，切片操作完全相同，只是切片的结果也变成了tuple。
+
+Python中，迭代永远是取出元素本身，而非元素的索引。
+对于有序集合，元素确实是有索引的。有的时候，我们确实想在 for 循环中拿到索引，怎么办？
+
+方法是使用 enumerate() 函数：
+
+>>> L = ['Adam', 'Lisa', 'Bart', 'Paul']
+>>> for index, name in enumerate(L):
+...     print index, '-', name
+... 
+0 - Adam
+1 - Lisa
+2 - Bart
+3 - Paul
+使用 enumerate() 函数，我们可以在for循环中同时绑定索引index和元素name。但是，这不是 enumerate() 的特殊语法。实际上，enumerate() 函数把：
+
+['Adam', 'Lisa', 'Bart', 'Paul']
+变成了类似：
+
+[(0, 'Adam'), (1, 'Lisa'), (2, 'Bart'), (3, 'Paul')]
+因此，迭代的每一个元素实际上是一个tuple：
+
+for t in enumerate(L):
+    index = t[0]
+    name = t[1]
+    print index, '-', name
+如果我们知道每个tuple元素都包含两个元素，for循环又可以进一步简写为：
+for index, name in enumerate(L):
+    print index, '-', name
+这样不但代码更简单，而且还少了两条赋值语句。
+
+可见，索引迭代也不是真的按索引访问，而是由 enumerate() 函数自动把每个元素变成 (index, element) 这样的tuple，再迭代，就同时获得了索引和元素本身。
+zip()函数可以把两个 list 变成一个 list：
+
+>>> zip([10, 20, 30], ['A', 'B', 'C'])
+[(10, 'A'), (20, 'B'), (30, 'C')]
+
+range(1,5)  包括1，不包括5 
+
+1. values() 方法实际上把一个 dict 转换成了包含 value 的list。
+
+2. 但是 itervalues() 方法不会转换，它会在迭代过程中依次从 dict 中取出 value，所以 itervalues() 方法比 values() 方法节省了生成 list 所需的内存。
+
+3. 打印 itervalues() 发现它返回一个 <dictionary-valueiterator> 对象，这说明在Python中，for 循环可作用的迭代对象远不止 list，tuple，str，unicode，dict等，任何可迭代对象都可以作用于for循环，而内部如何迭代我们通常并不用关心。
+
+如果一个对象说自己可迭代，那我们就直接用 for 循环去迭代它，可见，迭代是一种抽象的数据操作，它不对迭代对象内部的数据有任何要求。
+我们了解了如何迭代 dict 的key和value，那么，在一个 for 循环中，能否同时迭代 key和value？答案是肯定的。
+
+首先，我们看看 dict 对象的 items() 方法返回的值：
+
+>>> d = { 'Adam': 95, 'Lisa': 85, 'Bart': 59 }
+>>> print d.items()
+[('Lisa', 85), ('Adam', 95), ('Bart', 59)]
+可以看到，items() 方法把dict对象转换成了包含tuple的list，我们对这个list进行迭代，可以同时获得key和value：
+
+>>> for key, value in d.items():
+...     print key, ':', value
+... 
+Lisa : 85
+Adam : 95
+Bart : 59
+和 values() 有一个 itervalues() 类似， items() 也有一个对应的 iteritems()，iteritems() 不把dict转换成list，而是在迭代过程中不断给出 tuple，所以， iteritems() 不占用额外的内存。
+列表生成式则可以用一行语句代替循环生成上面的list：
+
+>>> [x * x for x in range(1, 11)]
+[1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+这种写法就是Python特有的列表生成式。利用列表生成式，可以以非常简洁的代码生成 list。
+print [x*(x+1) for x in range(1,100,2)]
+使用for循环的迭代不仅可以迭代普通的list，还可以迭代dict。
+
+假设有如下的dict：
+
+d = { 'Adam': 95, 'Lisa': 85, 'Bart': 59 }
+完全可以通过一个复杂的列表生成式把它变成一个 HTML 表格：
+
+tds = ['<tr><td>%s</td><td>%s</td></tr>' % (name, score) for name, score in d.iteritems()]
+print '<table>'
+print '<tr><th>Name</th><th>Score</th><tr>'
+print '\n'.join(tds)
+print '</table>'
+注：字符串可以通过 % 进行格式化，用指定的参数替代 %s。字符串的join()方法可以把一个 list 拼接成一个字符串。
+
+把打印出来的结果保存为一个html文件，就可以在浏览器中看到效果了：
+
+<table border="1">
+<tr><th>Name</th><th>Score</th><tr>
+<tr><td>Lisa</td><td>85</td></tr>
+<tr><td>Adam</td><td>95</td></tr>
+<tr><td>Bart</td><td>59</td></tr>
+</table>
+
+列表生成式的 for 循环后面还可以加上 if 判断。例如：
+
+>>> [x * x for x in range(1, 11)]
+[1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+如果我们只想要偶数的平方，不改动 range()的情况下，可以加上 if 来筛选：
+
+>>> [x * x for x in range(1, 11) if x % 2 == 0]
+[4, 16, 36, 64, 100]
+有了 if 条件，只有 if 判断为 True 的时候，才把循环的当前元素添加到列表中。
+1. isinstance(x, str) 可以判断变量 x 是否是字符串；
+
+2. 字符串的 upper() 方法可以返回大写的字母。
+
+map()是 Python 内置的高阶函数，它接收一个函数 f 和一个 list，并通过把函数 f 依次作用在 list 的每个元素上，得到一个新的 list 并返回。
+map()函数不改变原有的 list，而是返回一个新的 list
+利用map()函数，可以把一个 list 转换为另一个 list，只需要传入转换函数。
+
+由于list包含的元素可以是任何类型，因此，map() 不仅仅可以处理只包含数值的 list，事实上它可以处理包含任意类型的 list，只要传入的函数f可以处理这种数据类型。
+reduce()函数也是Python内置的一个高阶函数。reduce()函数接收的参数和 map()类似，一个函数 f，一个list，但行为和 map()不同，reduce()传入的函数 f 必须接收两个参数，reduce()对list的每个元素反复调用函数f，并返回最终结果值。
+例如，编写一个f函数，接收x和y，返回x和y的和：
+
+def f(x, y):
+    return x + y
+调用 reduce(f, [1, 3, 5, 7, 9])时，reduce函数将做如下计算：
+
+先计算头两个元素：f(1, 3)，结果为4；
+再把结果和第3个元素计算：f(4, 5)，结果为9；
+再把结果和第4个元素计算：f(9, 7)，结果为16；
+再把结果和第5个元素计算：f(16, 9)，结果为25；
+由于没有更多的元素了，计算结束，返回结果25。
+上述计算实际上是对 list 的所有元素求和。虽然Python内置了求和函数sum()，但是，利用reduce()求和也很简单。
+
+reduce()还可以接收第3个可选参数，作为计算的初始值。如果把初始值设为100，计算：
+
+reduce(f, [1, 3, 5, 7, 9], 100)
+结果将变为125，因为第一轮计算是：
+
+计算初始值和第一个元素：f(100, 1)，结果为101。
+filter()函数是 Python 内置的另一个有用的高阶函数，filter()函数接收一个函数 f 和一个list，这个函数 f 的作用是对每个元素进行判断，返回 True或 False，filter()根据判断结果自动过滤掉不符合条件的元素，返回由符合条件元素组成的新list。
+
+例如，要从一个list [1, 4, 6, 7, 9, 12, 17]中删除偶数，保留奇数，首先，要编写一个判断奇数的函数：
+
+def is_odd(x):
+    return x % 2 == 1
+然后，利用filter()过滤掉偶数：
+
+filter(is_odd, [1, 4, 6, 7, 9, 12, 17])
+结果：[1, 7, 9, 17]
+
+利用filter()，可以完成很多有用的功能，例如，删除 None 或者空字符串：
+
+def is_not_empty(s):
+    return s and len(s.strip()) > 0
+filter(is_not_empty, ['test', None, '', 'str', '  ', 'END'])
+结果：['test', 'str', 'END']
+
+注意: s.strip(rm) 删除 s 字符串中开头、结尾处的 rm 序列的字符。
+Python内置的 sorted()函数可对list进行排序
+sorted()也是一个高阶函数，它可以接收一个比较函数来实现自定义排序，比较函数的定义是，传入两个待比较的元素 x, y，如果 x 应该排在 y 的前面，返回 -1，如果 x 应该排在 y 的后面，返回 1。如果 x 和 y 相等，返回 0。
+在函数内部定义的函数和外部定义的函数是一样的，只是他们无法被外部访问：
+
+def g():
+    print 'g()...'
+
+def f():
+    print 'f()...'
+    return g
+将 g 的定义移入函数 f 内部，防止其他代码调用 g：
+
+def f():
+    print 'f()...'
+    def g():
+        print 'g()...'
+    return g
+但是，考察上一小节定义的 calc_sum 函数：
+
+def calc_sum(lst):
+    def lazy_sum():
+        return sum(lst)
+    return lazy_sum
+注意: 发现没法把 lazy_sum 移到 calc_sum 的外部，因为它引用了 calc_sum 的参数 lst。
+
+像这种内层函数引用了外层函数的变量（参数也算变量），然后返回内层函数的情况，称为闭包（Closure）。
+
+闭包的特点是返回的函数还引用了外层函数的局部变量，所以，要正确使用闭包，就要确保引用的局部变量在函数返回后不能变。举例如下：
+
+# 希望一次返回3个函数，分别计算1x1,2x2,3x3:
+def count():
+    fs = []
+    for i in range(1, 4):
+        def f():
+             return i*i
+        fs.append(f)
+    return fs
+
+f1, f2, f3 = count()
+你可能认为调用f1()，f2()和f3()结果应该是1，4，9，但实际结果全部都是 9（请自己动手验证）。
+
+原因就是当count()函数返回了3个函数时，这3个函数所引用的变量 i 的值已经变成了3。由于f1、f2、f3并没有被调用，所以，此时他们并未计算 i*i，当 f1 被调用时：
+
+>>> f1()
+9     # 因为f1现在才计算i*i，但现在i的值已经变为3
+因此，返回函数不要引用任何循环变量，或者后续会发生变化的变量。
+
+def calc_sum(lst):
+    def lazy_sum():
+        return sum(lst)
+    return lazy_sum
+注意: 发现没法把 lazy_sum 移到 calc_sum 的外部，因为它引用了 calc_sum 的参数 lst。
+
+像这种内层函数引用了外层函数的变量（参数也算变量），然后返回内层函数的情况，称为闭包（Closure）。
+
+闭包的特点是返回的函数还引用了外层函数的局部变量，所以，要正确使用闭包，就要确保引用的局部变量在函数返回后不能变。
+举例如下：
+
+# 希望一次返回3个函数，分别计算1x1,2x2,3x3:
+def count():
+    fs = []
+    for i in range(1, 4):
+        def f():
+             return i*i
+        fs.append(f)
+    return fs
+
+f1, f2, f3 = count()
+你可能认为调用f1()，f2()和f3()结果应该是1，4，9，但实际结果全部都是 9（请自己动手验证）。
+
+原因就是当count()函数返回了3个函数时，这3个函数所引用的变量 i 的值已经变成了3。由于f1、f2、f3并没有被调用，所以，此时他们并未计算 i*i，当 f1 被调用时：
+>>> f1()
+9     # 因为f1现在才计算i*i，但现在i的值已经变为3
+因此，返回函数不要引用任何循环变量，或者后续会发生变化的变量。
+
+返回闭包不能引用循环变量，请改写count()函数，让它正确返回能计算1x1、2x2、3x3的函数。
+
+?不会了怎么办
+考察下面的函数 f:
+
+def f(j):
+    def g():
+        return j*j
+    return g
+它可以正确地返回一个闭包g，g所引用的变量j不是循环变量，因此将正常执行。
+
+在count函数的循环内部，如果借助f函数，就可以避免引用循环变量i。
+
+参考代码:
+
+def count():
+    fs = []
+    for i in range(1, 4):
+        def f(j):
+            def g():
+                return j*j
+            return g
+        r = f(i)
+        fs.append(r)
+    return fs
+f1, f2, f3 = count()
+print f1(), f2(), f3()
