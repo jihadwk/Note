@@ -1,0 +1,13 @@
+mysql 关系数据库
+redis 缓存数据库
+python set 内存，set集合元素不重复，重复的自动删除
+url管理器
+调度器
+下载器:
+	Python网页下载器有：
+
+	* urllib2 (Python官方基础模块)
+
+	* requests （第三方包，更强大）
+解析器
+应用
