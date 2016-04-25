@@ -1,0 +1,21 @@
+找到字符串中最后一个和搜索字串一致的位置
+
+// string::rfind
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main ()
+{
+  string str ("The sixth sick sheik's sixth sheep's sick.");
+  string key ("sixth");
+  size_t found;
+
+  found=str.rfind(key); 由于是rfind, 所以得到的是后面的sixth的位置, 如果使用find, 得到的就是前一个sixth的位置
+  if (found!=string::npos)
+    str.replace (found,key.length(),"seventh");
+
+  cout << str << endl;
+
+  return 0;
+}
