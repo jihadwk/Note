@@ -1,0 +1,42 @@
+1.操作系统是OS X
+2.使用Homebrew 来安装Watchman和Flow
+	1.Homebrew是神马
+
+	linux系统有个让人蛋疼的通病，软件包依赖，好在当前主流的两大发行版本都自带了解决方案，Red hat有yum，Ubuntu有apt-get
+
+	神马，你用mac os，不好意Mac os木有类似的东东，泪奔中几经折腾总算找到了第三方支持：Homebrew，Homebrew简称brew，是Mac OSX上的软件包管理工具，能在Mac中方便的安装软件或者卸载软件，可以说Homebrew就是mac下的apt-get、yum神器
+	2.Homebrew安装
+
+	Homebrew的安装非常简单，打开终端复制、粘贴以下命令，回车，搞定(请放心使用，原汁原味的官方安装方法搬运）
+
+	ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+	3.Homebrew使用
+
+	Homebrew使用没啥好说的了，常用的
+
+	搜索软件：brew search 软件名，如brew search wget
+
+	安装软件：brew install 软件名，如brew install wget
+
+	卸载软件：brew remove 软件名，如brew remove wget
+
+
+
+3.安装Node.js 4.0或更高版本(译注：如果你并不使用Node.js开发网站，只是用于React Native的开发，那么请先安装homebrew，然后直接使用brew install node安装即可，不必按照下面的nvm的安装步骤)◦安装 nvm（安装向导在这里）。然后运行nvm install node && nvm alias default node，这将会默认安装最新版本的Node.js并且设置好命令行的环境变量，这样你可以输入node命令来启动Node.js环境。nvm使你可以同时安装多个版本的Node.js，并且在这些版本之间轻松切换。
+◦如果你从未接触过npm，推荐阅读npm的文档
+
+4.在命令行中输入brew install watchman，我们推荐安装watchman，否则你可能会遇到一个Node.js监视文件系统的BUG。
+5.如果你希望使用flow来为js代码加上类型检查，那么在命令行中输入brew install flow来安装flow。（译注：新手可以跳过这一步）
+我们推荐您定期运行brew update && brew upgrade来保持上述几个程序为最新版本。
+
+Watchman 是 facebook 的一个开源项目，它开源用来监视文件并且记录文件的改动情况，当文件变更它可以触发一些操作,例如执行一些命令等等 (用于监听文件变化，然后界面做出响应)
+
+flow是用于静态分析js语法错误的工具，能够更早的js的语法错误
+
+nvm是用于nodejs版本管理的工具，用于安装nodejs。
+
+NPM是随同NodeJS一起安装的包管理工具，能解决NodeJS代码部署上的很多问题，常见的使用场景有以下几种：•允许用户从NPM服务器下载别人编写的第三方包到本地使用。 • 允许用户从NPM服务器下载并安装别人编写的命令行程序到本地使用。 • 允许用户将自己编写的包或命令行程序上传到NPM服务器供别人使用。
+
+Node.js采用C++语言编写而成，是一个Javascript的运行环境 
+
+jquery是一个运行在客户端的javascript库，主要提供操作DOM等等的简化操作；node.js是运行在服务器端的一个服务器程序，运行javascript语言，是一个服务器软件，解释执行js语言。可以用js语言操作服务器层面的事务，比如创建http链接，信息的I/O。这些是和jquery一样用的js语言进行操作执行的。就是说node.js是一个利用js语言的服务器程序，可以运行jquery，但是其中的一些事件是用不到的；jquery是一个js库，主要是处理搜索客户端事务。
