@@ -1,0 +1,9 @@
+c++:
+typedef: http://www.cnblogs.com/charley_yang/archive/2010/12/15/1907384.html
+序列化: http://www.cnblogs.com/lanxuezaipiao/p/3703988.html
+
+
+
+
+
+cocos2dx资源：https://github.com/fusijie/Cocos-Resource

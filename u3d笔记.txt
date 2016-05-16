@@ -1,4 +1,5 @@
 我要自学网：jihadwk wukai&6
+https://git.oschina.net/liyonghelpme/unityRpg
 
 //游戏期间防止Android系统待机黑屏
 Screen.sleepTimeout = SleepTimeout.NeverSleep;
@@ -75,3 +76,217 @@ BuildPipeline.PopAssetDenpendencies
 增量式发布assetbundle
 
 .mat 材质  material
+
+PixelPerfect 像素保持原始大小
+FixedSize  固定比例缩放
+FixedSizeOnMobiles是两种方案的结合体，它会让UI在PC、Mac、Linux系统下自动采用PixelPerfect，而在移动设备上自动采用FixedSize。
+如果没有选择FixedSize，那么必须设置另外两种缩放模式下的MinimumHeight和MaximumHeight两个值，代表最大高度和最小高度。例如选择PixelPerfect模式，将MinimumHeight设置为720，将MaximumHeight设置为900，那么在一个分辨率为800*600的屏幕上，因为屏幕分辨率的高度小于UIRoot里的最小高度，UIRoot就会按照FixedSize模式下ManualHeight为720的情况进行处理；同理，如果将UI放到一个分辨率为1920*1080的屏幕上，因为该屏幕分辨率的高度1080大于设置的900，于是UIRoot就会按照FixedSize模式下ManualHeight为900的情况进行处理。?
+值得注意的是，在3.7.0以后的NGUI上，UIRoot的缩放模式改为了。???Flexible，等同于上文讲到的PixelPerfect。???Constrained，等同于上文讲到的FixedSize。?
+??ConstrainedOnMobiles，等同于上文讲到的FixedSizeOnMobiles。
+render q 渲染次序
+
+--------------------------------------------------------------------------------
+--  yield理解：
+--------------------------------------------------------------------------------
+可以把yield理解成一种特殊形式的return，它和return一样，会立即把执行权返回父级函数。特别之处在于，yield后面跟的函数或对象会跟一个条件判断，当条件满足时，就会再次回调包含该yield的子函数，并且从yield语句之后继续执行。条件满足之前，执行父函数下面的语句，可以看作异步执行。
+
+
+例如：
+
+
+js:
+callYieldFunction();
+Debug.Log("print second");
+
+
+function callYieldFunction()
+{
+    Debug.Log("print first");
+    yield new WaitForSeconds(2);
+    Debug.Log("print after 2 seconds");
+}
+
+
+
+
+c#:
+
+
+//在c#中必须显示的指明，启动一个线程以调用含有yield的函数。
+   StartCoroutine(callYieldFunction());
+   Debug.Log("print second");
+
+
+//在c#中含有yield的函数，返回值必须为IEnumerator
+   IEnumerator callYieldFunction()    
+   {
+Debug.Log("print first");
+yield return new WaitForSeconds(2);    
+Debug.Log("print after 2 seconds");
+   }
+
+
+
+
+当没有父函数可以返回，本身已经是顶级函数的时候，yield的条件相当于同步执行，程序一直等到条件满足，才继续执行下面的语句。
+
+
+例如：
+
+
+js: function Start()
+{
+   Debug.Log("print first");
+   yield new WaitForSeconds(2);
+   Debug.Log("print after 2 seconds");
+}
+
+
+c#：IEnumerator Start()     //注意c#中的返回值
+{
+   Debug.Log("print first");
+   yield return new WaitForSeconds(2);    
+   Debug.Log("print after 2 seconds");
+}
+
+
+
+
+在理解了这个之后，就可以理解使用嵌套的yield，来实现同步的子线程调用。
+例如：因为start函数已经是顶级函数，所以外层的yield会”死在这里“，直到嵌套的线程执行完毕，再继续执行。
+
+
+js: function start()
+{
+   yield StartCoroutine("callYieldFunction");
+   Debug.Log("print latest");
+}
+
+
+    function callYieldFunction()
+{
+    Debug.Log("print first");
+    yield new WaitForSeconds(2);
+    Debug.Log("print after 2 seconds");
+}
+
+
+c#：
+IEnumerator Start()
+{
+   yield return StartCoroutine("callYieldFunction");//等待 ，实现了同步  yield嵌套    
+   Debug.Log("print latest");
+}
+
+
+IEnumerator callYieldFunction()    
+{
+    Debug.Log("print first");
+    yield return new WaitForSeconds(2);    
+    Debug.Log("print after 2 seconds");
+}
+
+//IEnumerable foreach遍历
+using System.Collections;  
+  
+public class List  
+{  
+    public bool onOff = false;  
+  
+    public static IEnumerable ForExample()  
+    {  
+        yield return "1";  // 第一次调用时执行  
+        yield return "2";  // 第二次调用时执行  
+        if (onOff)            // 第三次调用时执行  
+        {  
+            // 执行 yield break 之后不再执行下面语句  
+            yield break;  
+        }  
+        // 否则,onOff为 false  
+        yield return "3";  // 第四次调用时执行  
+        yield return "4";  // 第五次调用时执行  
+    }  
+  
+    static void Main()  
+    {  
+        foreach (string s in ForExample())  
+            Console.WriteLine(s);  
+  
+        Console.ReadKey();  
+    }  
+}
+-------------------------------------------------
+--WWW  AssetBundle
+-------------------------------------------------
+www 根据URL下载文件  WWW.LoadFromCacheOrDownload
+WWW.AssetBundle    AssetBundle bundle=AssetBundle.CreateFromMemory(www.bytes)
+加载asset  bundle.LoadAsync("myObject",typeof(GameObject))
+bundle.UnLoad(false) false:只卸载Assetbundle ,不删除从该AssetBundle加载的assets
+true:都卸载 Assetbundle  从该AssetBundle加载的assets
+AssetDataBase.GetAssetPath(object或object.GetInstanceID())得到资源路径
+Application.streamingAssetsPath 移动平台打包文件存在这里，只读文件
+EditorUtility.SaveFolderPanel 打开文件面板   EditorUtility.DisplayDialog显示提示
+打包资源 
+BuildAssetBundleOptions options = BuildAssetBundleOptions.CollectDependencies | BuildAssetBundleOptions.CompleteAssets | BuildAssetBundleOptions.DeterministicAssetBundle;
+		Object[] selections = new Object[1] { obj };
+		string[] selectPathList = new string[selections.Length];
+		for (int index = 0; index < selections.Length; index++)
+		{
+			selectPathList[index] = AssetDatabase.GetAssetPath((UnityEngine.Object)selections[index]);
+		}
+		BuildPipeline.PushAssetDependencies();
+		#if !UNITY_IOS
+		BuildPipeline.BuildAssetBundle(obj, selections, savePath, options, BuildTarget.Android);
+		#elif UNITY_IOS
+		BuildPipeline.BuildAssetBundle(obj, selections, savePath, options, BuildTarget.iPhone);
+		#endif
+		BuildPipeline.PopAssetDependencies();
+		
+		AssetDatabase.Refresh();
+		
+
+		
+-----------------------------------------------
+--相机 画中画
+-----------------------------------------------
+delete: liaotian.png
+-345.4169 -33.09156 0 
+6 462 1 
+
+1.640551 4.185377 0
+820 366 1
+
+del:jingjiChangZhanbao_bak.png
+排名军衔声望最大连胜 当前激活效果 剩余时间
+1:-417 32 0
+2:-417 -8 
+3:-417 -48
+4:-398 -88
+5:-379 -166
+6:-397 -206
+headbak:-350 101 0
+167 89 0 
+71 71 24 25
+titlebak: -351 167 0 
+236 41 0 
+translucent 3 5 1 2 
+156 170 19 19 
+-348.0355 -34.35815
+248 460 1 
+line :-221.6835 -34.26611
+10 464 1 
+
+236 ：232
+-194 5 209
+
+169 167 
+-100.1 290（293） 0 （-1）
+-94
+-102
+竞技场prefabs
+ArenaPart
+商店mallpart
+-----------------------------------------------
+--NGUI
+-----------------------------------------------
+OnHover 鼠标滑过

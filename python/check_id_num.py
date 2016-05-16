@@ -46,7 +46,7 @@ def check_id_num(num): #num字符串
 	return False
 
 #test
-s='341125199210213614'
+s='343125199310213613'
 if check_id_num(s):
         print u'有效的身份证'
 else:

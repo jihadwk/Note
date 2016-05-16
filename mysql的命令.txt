@@ -36,3 +36,5 @@ status;默认状态
 		双精度double 8字节
 	decimal(M,N) 准确的数字，M代表整数位，N代表小数位数 
 ----	
+
+jdbc驱动URL 带上参数   ?useUnicode=true&characterEncoding=UTF-8  解决中文乱码
