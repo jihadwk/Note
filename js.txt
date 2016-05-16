@@ -1,0 +1,24 @@
+react-native.com官方网站 或者看中文的react-native.cn
+用npm来管理
+基于nodejs
+
+
+primitive type 原始类型和对象类型object type
+null undefined 两种特殊定义
+对象object是属性property的集合，每个属性由“名/值对”构成
+NaN(not a number )非数字
+Infinity无穷大
+RegExp 正则表达式   /^Html/  /[1-9][0-9]*/  直接量
+string也可以接受正则表达式参数
+<script src="xxx">
+</script>
+前端
+false:undefined null 0 -0 NAN "" 假值
+typeof(null)=="object"
+如果没有返回任何值，则返回undefined，更深层次的空值
+typeof(null)==typeof(undefined) true 
+typeof(null)===typeof(undefined) false 严格比较
+包装对象, string...等 length ...只读的属性，区别于对象
+
+不可变的原始值和可变的对象引用
+s.toUpperCase();s 转为大写字符串
