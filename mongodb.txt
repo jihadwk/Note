@@ -1,0 +1,5 @@
+打开mongodb服务：
+mongod.exe --dbpath h:\data\db
+mongoVUE连接mongoDB3.2不能正常显示collection：
+3.x使用的引擎默认是wiredTiger引擎，2.x默认是mmapv1引擎，而mongoVUE使用的还是之前的引擎，所以collection无法正常显示
+mongod –storageEngine mmapv1 –dbpath XXXXX 这样启动mongoDB，就能够正常使用mongoVUE图形界面工具了

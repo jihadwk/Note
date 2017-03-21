@@ -1,0 +1,8 @@
+bind:no error
+解决办法：
+redis-cli.exe
+shutdown
+exit
+redis-server.exe
+启动脚本：
+redis-server redis.windows.conf

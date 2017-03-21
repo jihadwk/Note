@@ -1,0 +1,16 @@
+C:\Windows\System32\drivers\etc
+可以在该位置找到hosts文件
+### 修改本地Host
+
+ 127.0.0.1	upms.zhangshuzheng.cn
+ 127.0.0.1	cms.zhangshuzheng.cn
+ 127.0.0.1	pay.zhangshuzheng.cn
+ 127.0.0.1	ucenter.zhangshuzheng.cn
+ 127.0.0.1	wechat.zhangshuzheng.cn
+ 127.0.0.1	api.zhangshuzheng.cn
+ 127.0.0.1	oss.zhangshuzheng.cn
+ 127.0.0.1 localhost
+
+ 这样在本地浏览器访问IP 127.0.0.1就可以改成相应的域名
+ 例如http://upms.zhangshuzheng.cn:1111/manage/index等价于
+ http://127.0.0.1:1111/manage/index
